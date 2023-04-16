@@ -1,0 +1,119 @@
+local Spawner = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors/Entity%20Spawner/Source.lua"))()
+local entity = Spawner.createEntity({
+    CustomName = "Follower",
+    Model = "https://github.com/RegularVynixu/Utilities/blob/main/Doors/Entity%20Spawner/Assets/Entities/Rush.rbxm?raw=true", "rbxassetid://13156965431"
+    Speed = 120,
+    MoveDelay = 2,
+    HeightOffset = 0,
+    CanKill = true,
+    KillRange = 75,
+    SpawnInFront = false,
+    ShatterLights = true,
+    FlickerLights = {
+        Enabled = true,
+        Duration = 6
+    },
+    Cycles = {
+        Min = 3,
+        Max = 5,
+        Delay = 4
+    },
+    CamShake = {
+        Enabled = false,
+        Values = {1.5, 20, 0.1, 1},
+        Range = 100
+    },
+    Jumpscare = {
+        true,
+        {
+            Image1 = "https://github.com/Exoskeleton999/EntitySounds/blob/main/Creepy_eyes.webp",
+            Image2 = "https://github.com/Exoskeleton999/EntitySounds/blob/main/eye.png",
+            Shake = true,
+            Sound1 = { 
+               https://github.com/Exoskeleton999/EntitySounds/blob/main/Finding.mp4?raw=true,
+                { Volume = 1 },
+            },
+            Flashing = {
+                false,
+                Color3.fromRGB(70, 25, 0),
+            },
+            Tease = {
+                true,
+                Min = 2,
+                Max = 4,
+            },
+        },
+    },
+})
+
+    ResistCrucifix = false,
+    BreakCrucifix = true,
+    DeathMessage = {"HE FOUND YOU 👀"},
+    IsCuriousLight = false
+})
+
+entity.Debug.OnEntitySpawned = function()
+    print("Something is following you.")
+    local Sound = Instance.new("Sound")
+    Sound.Parent = game.SoundService
+    Sound.Name = "Hide"
+
+     Sound.SoundId = GetSound("https://github.com/Exoskeleton999/EntitySounds/blob/main/SpawningScream.mp4?raw=true", "EntitySound")
+
+     Sound:Play()
+end
+
+entity.Debug.OnEntityDespawned = function()
+    print("Hide and Seek has stopped!")
+end
+
+entity.Debug.OnEntityStartMoving = function()
+    print("Follower has begun looking")
+    local Sound = Instance.new("Sound")
+    Sound.Parent = game.SoundService
+    Sound.Name = "Hide"
+
+     Sound.SoundId = GetSound("https://github.com/Exoskeleton999/EntitySounds/blob/main/EnteringRoom.mp4?raw=true", "EntitySound")
+
+     Sound:Play()
+end
+
+entity.Debug.OnEntityFinishedRebound = function()
+    print("Follower finished rebound")
+end
+
+entity.Debug.OnEntityEnteredRoom = function(room)
+    print("Follower entered room:", room)
+    local Sound = Instance.new("Sound")
+    Sound.Parent = game.SoundService
+    Sound.Name = "Hide"
+
+     Sound.SoundId = GetSound("https://github.com/Exoskeleton999/EntitySounds/blob/main/EnteringRoom.mp4?raw=true", "EntitySound")
+
+     Sound:Play()
+end
+
+entity.Debug.OnLookAtEntity = function()
+    print("Follower takes sight")
+end
+
+entity.Debug.OnDeath = function()
+    print("Player has been found")
+    local Sound = Instance.new("Sound")
+    Sound.Parent = game.SoundService
+    Sound.Name = "Arrival"
+
+     Sound.SoundId = GetSound("https://github.com/Exoskeleton999/EntitySounds/blob/main/Finding.mp4?raw=true", "EntitySound")
+
+     Sound:Play()
+end
+
+--[[
+    NOTE: By overwriting 'OnUseCrucifix', the default crucifixion will be ignored and this function will be called instead
+
+    entity.Debug.OnUseCrucifix = function()
+        print("Custom crucifixion script here")
+    end
+]]--
+
+Spawner.runEntity(entity)
